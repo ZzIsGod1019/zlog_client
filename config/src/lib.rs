@@ -14,14 +14,13 @@ use serde::Deserialize;
 
 #[derive(Deserialize,Debug)]
 pub struct Config {
-    package : Package
+    file_config : FileConfig
 }
 
 #[derive(Deserialize,Debug)]
-pub struct Package {
-    name: String,
-    version: String,
-    edition: Option<String>,
+pub struct FileConfig {
+    path: String,
+    listen_interval: String,
 }
 
 
