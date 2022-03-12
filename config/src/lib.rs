@@ -1,3 +1,6 @@
+use std::{fs::File, io::Read};
+use serde::Deserialize;
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -9,22 +12,21 @@ mod tests {
         assert_eq!(String::from("config1"), config.package.name);
     }
 }
-use std::{fs::File, io::Read};
-use serde::Deserialize;
 
 #[derive(Deserialize,Debug)]
 pub struct Config {
-    file_config : FileConfig
+    pub file_config : FileConfig
 }
 
 #[derive(Deserialize,Debug)]
 pub struct FileConfig {
-    path: String,
-    listen_interval: String,
+    pub path: String,
+    pub listen_interval: u64,
 }
 
 
-pub fn get_config(path: &'static str)-> Config{
+pub fn get_config(path: Option<&'static str>)-> Config{
+    let path = path.unwrap_or("./App.toml");
     let mut config_file = match File::open(path) {
         Ok(c) => c,
         Err(e) => {
@@ -38,7 +40,6 @@ pub fn get_config(path: &'static str)-> Config{
             panic!("读取失败:{}", e);
         }
     };
-    println!("文件内容:{}", config_content);
     match toml::from_str(&config_content) {
         Ok(c) => c,
         Err(e) => {

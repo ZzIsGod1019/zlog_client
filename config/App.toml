@@ -1,5 +1,5 @@
 [file_config]
 path = "config"
-listen_interval = "60"
+listen_interval = 3
 
 [dependencies]

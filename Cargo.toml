@@ -10,3 +10,4 @@ futures = { version = "0.3", features = ["compat"] }
 tokio = { version = "1", features = ["full"] }
 
 config = {path = "./config"}
+kernel = {path = "./kernel"}

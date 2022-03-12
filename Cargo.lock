@@ -135,6 +135,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "kernel"
+version = "0.1.0"
+
+[[package]]
 name = "libc"
 version = "0.2.119"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -458,5 +462,6 @@ version = "0.1.0"
 dependencies = [
  "config",
  "futures 0.3.21",
+ "kernel",
  "tokio",
 ]
