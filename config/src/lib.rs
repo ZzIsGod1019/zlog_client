@@ -27,24 +27,14 @@ pub struct FileConfig {
 
 pub fn get_config(path: Option<&'static str>)-> Config{
     let path = path.unwrap_or("./App.toml");
-    let mut config_file = match File::open(path) {
-        Ok(c) => c,
-        Err(e) => {
-            panic!("未找到配置文件{}:{}", path,e);
-        }
-    };
+    
+    let mut config_file = File::open(path)
+        .unwrap_or_else(|e| panic!("未找到配置文件{}:{}", path,e));
     let mut config_content = String::new();
-    match config_file.read_to_string(&mut config_content) {
-        Ok(c) => c,
-        Err(e) => {
-            panic!("读取失败:{}", e);
-        }
-    };
-    match toml::from_str(&config_content) {
-        Ok(c) => c,
-        Err(e) => {
-            panic!("toml文件解析失败:{}", e);
-        }
-    }
 
+    config_file.read_to_string(&mut config_content)
+        .unwrap_or_else(|e| panic!("读取失败{}:{}", path,e));
+    
+    toml::from_str(&config_content)
+        .unwrap_or_else(|e| panic!("toml文件解析失败{}:{}", path,e))
 }
