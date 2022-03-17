@@ -9,7 +9,7 @@ pub fn main() {
     let config = config::get_config(Some("./config/App.toml"));
     // 初始化
     // kernel::init();
-    kernel::update_offset_file("./config/App.toml".to_string(), 0);
+    // kernel::update_offset_file("./config/App.toml".to_string(), 0);
     // 启动读取日志文件
     let listen_interval = config.file_config.listen_interval;
     let path = config.file_config.path;
