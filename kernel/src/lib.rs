@@ -34,9 +34,9 @@ pub fn get_updated_file(path: &str,interval: u64) -> Vec<PathBuf> {
 
 // 更新偏移量记录
 pub fn update_offset_file(file_name: String, offset: u64) {
-    let mut file = File::open(path).unwrap();
-    let config = config::get_config(Some("./data/offset_index"));
-    println!("config:{:?}", config);
+    // let mut file = File::open(path).unwrap();
+    // let config = config::get_config(Some("./data/offset_index"));
+    // println!("config:{:?}", config);
 }
 
 // 读取文件

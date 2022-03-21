@@ -3,12 +3,13 @@ use tokio::runtime::Runtime;
 use std::thread;
 use config;
 use kernel;
+use datadriven::file_index;
 
 pub fn main() {
     // 读取配置
     let config = config::get_config(Some("./config/App.toml"));
     // 初始化
-    // kernel::init();
+    file_index::init();
     // kernel::update_offset_file("./config/App.toml".to_string(), 0);
     // 启动读取日志文件
     let listen_interval = config.file_config.listen_interval;
