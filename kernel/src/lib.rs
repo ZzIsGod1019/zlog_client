@@ -2,6 +2,8 @@ use std::io::{self, Read, Seek, SeekFrom};
 use std::time::{SystemTime};
 use std::path::{Path, PathBuf};
 use std::fs::{self, File};
+use datadriven::file_index;
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -12,8 +14,8 @@ mod tests {
 }
 // 初始化
 pub fn init() {
-    // 创建偏移量记录文件
-    File::create("./data/offset_index.toml").unwrap();
+    // 创建sqlite记录文件
+    file_index::init();
 }
 
 // 获取更新文件

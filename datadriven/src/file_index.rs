@@ -1,19 +1,6 @@
 use rusqlite::{named_params, Connection, Result};
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
-
 const PATH:&str = "./data/app.db";
-
-pub struct data {
-    pub file_name: String,
-    pub offset: u32,
-}
 
 fn get_conn() -> Connection {
     Connection::open(PATH).
@@ -22,25 +9,26 @@ fn get_conn() -> Connection {
 
 pub fn init() -> Result<()> {
     let conn = get_conn();
-    conn.execute("create TABLE file_index (
-        id              INTEGER PRIMARY KEY,
-        file_name       TEXT NOT NULL,
-        offset          INTEGER DEFAULT 0)", [])?;
+    let mut stat = conn.prepare("select count(*) from sqlite_master  where type='table' and name = 'file_index'")?;
+    let is_exists = stat.exists([])?;
+    if !is_exists {
+        conn.execute("create TABLE file_index (
+            id              INTEGER PRIMARY KEY,
+            file_name       TEXT NOT NULL,
+            offset          INTEGER DEFAULT 0)", [])?;
+    }
     Ok(())
 }
 
 pub fn get_offset(file_name: &str) -> Result<u32> {
     let conn = get_conn();
     let mut stat = conn.prepare("select offset from file_index where file_name = :file_name")?;
-    let rows = stat.query_map(named_params!{
+
+    let offset = stat.query_row(named_params!{
         ":file_name": file_name
     }, |row| row.get(0))?;
 
-    let mut names = 0;
-    for offset_result in rows {
-        names = offset_result?;
-    }
-    Ok(names)
+    Ok(offset)
 }
 
 pub fn set_data(file_name: &str, offset: u32) -> Result<()> {

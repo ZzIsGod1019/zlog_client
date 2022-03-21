@@ -202,6 +202,9 @@ dependencies = [
 [[package]]
 name = "kernel"
 version = "0.1.0"
+dependencies = [
+ "datadriven",
+]
 
 [[package]]
 name = "libc"
@@ -576,7 +579,6 @@ name = "zlog_client"
 version = "0.1.0"
 dependencies = [
  "config",
- "datadriven",
  "futures 0.3.21",
  "kernel",
  "tokio",

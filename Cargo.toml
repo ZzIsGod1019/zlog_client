@@ -11,4 +11,3 @@ tokio = { version = "1", features = ["full"] }
 
 config = {path = "./config"}
 kernel = {path = "./kernel"}
-datadriven = {path = "./datadriven"}
